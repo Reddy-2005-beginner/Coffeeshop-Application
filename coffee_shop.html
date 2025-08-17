@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>Coffee Shop</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: no-repeat center center fixed; background-size: cover;
+      min-height: 100vh;
+    }
+    .center-box {
+      background: rgba(255,255,255,0.96);
+      border-radius: 16px;
+      box-shadow: 0 2px 30px rgba(106,74,60,0.3);
+      padding: 30px;
+      width: 320px;
+      margin: 80px auto 0 auto;
+      text-align: center;
+    }
+    h2 {
+      font-family: 'Pacifico', cursive, Arial, sans-serif;
+      color: #6a4a3c;
+      margin-bottom: 20px;
+      font-size: 2em;
+    }
+    .menu-header {
+      font-family: 'Pacifico', cursive, 'Noto Color Emoji', Arial, sans-serif;}
+    
+    .coffee-icon {
+      font-family: 'Noto Color Emoji', sans-serif;
+    }
+
+    input[type="text"], input[type="password"], input[type="email"], textarea {
+      width: 90%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1.5px solid #cfad8d;
+      border-radius: 7px;
+      font-size: 1em;
+      background: #f9f6f3;
+    }
+    button {
+      padding: 10px 20px;
+      background: #8b5c2d;
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      font-size: 1em;
+      margin-top: 12px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover { background: #6a4a3c; }
+    .link { color: #39998b; cursor: pointer; text-decoration: underline; }
+    .hidden { display: none; }
+
+    /* Menu page styles */
+    .menu-header {
+      text-align: center;
+      color: #6a4a3c;
+      font-family: 'Pacifico', cursive, Arial, sans-serif;
+      font-size: 2.3em;
+      margin: 30px 0;
+    }
+    .menu-container {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+    }
+    .category-section {
+      margin-bottom: 30px;
+    }
+    .category-title {
+      font-family: 'Pacifico', cursive, Arial, sans-serif;
+      color: #6a4a3c;
+      font-size: 1.8em;
+      margin-bottom: 15px;
+      text-align: left;
+    }
+    .menu-items {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 32px;
+    }
+    .menu-card {
+      background-color: transparent;
+      border-radius: 16px;
+      padding: 22px 16px;
+      width: 224px;
+      text-align: center;
+      transition: transform 0.18s;
+    }
+    .menu-card:hover { transform: translateY(-6px) scale(1.04); }
+    .menu-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 13px;
+    }
+    .menu-title {
+      font-family: 'Pacifico', cursive, Arial, sans-serif;
+      color: #6a4a3c;
+      font-size: 1.25em;
+      margin-bottom: 7px;
+    }
+    .menu-price {
+      color: #8b5c2d;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+    .order-btn {
+      background: #8b5c2d;
+      color: white;
+      border: none;
+      border-radius: 7px;
+      padding: 9px 18px;
+      font-size: 1em;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .order-message {
+      background: #d7f5e6;
+      color: #247158;
+      border-radius: 6px;
+      font-weight: 600;
+      margin-top: 12px;
+      padding: 7px 0;
+    }
+    
+    /* Navigation styles */
+    .nav-bar {
+      background: rgba(255,255,255,0.9);
+      padding: 10px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .nav-bar button {
+      margin: 0 10px;
+    }
+    /* Search bar styles */
+    .search-bar {
+      max-width: 900px;
+      margin: 20px auto;
+      text-align: center;
+    }
+    .search-bar input {
+      width: 300px;
+      padding: 10px;
+      border: 1.5px solid #cfad8d;
+      border-radius: 7px;
+      font-size: 1em;
+    }
+    /* Details page styles */
+    .details-container {
+      max-width: 600px;
+      margin: 30px auto;
+      background: #fffdfa;
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+    }
+    .details-img {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 15px;
+    }
+    .rating {
+      margin: 10px 0;
+      font-size: 1.1em;
+    }
+    .rating select {
+      padding: 5px;
+      border-radius: 5px;
+      border: 1px solid #cfad8d;
+    }
+    .buy-now-btn {
+      background: #39998b;
+      padding: 10px 30px;
+      margin-top: 10px;
+    }
+    .buy-now-btn:hover { background: #2e7d6f; }
+    /* Orders page styles */
+    .orders-container {
+      max-width: 900px;
+      margin: 30px auto;
+      background: #fffdfa;
+      border-radius: 16px;
+      padding: 20px;
+    }
+    .order-item {
+      border-bottom: 1px solid #cfad8d;
+      padding: 10px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .order-item:last-child { border-bottom: none; }
+    
+    /* Feedback form styles */
+    .feedback-container {
+      max-width: 600px;
+      margin: 30px auto;
+      background: #fffdfa;
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+    }
+    .feedback-container h2 {
+      margin-bottom: 20px;
+    }
+    .feedback-container textarea {
+      height: 150px;
+      resize: vertical;
+    }
+    .thank-you-message {
+      color: #39998b;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Login Box -->
+<div class="center-box" id="loginBox">
+  <h2>Coffee Shop Login</h2>
+  <input type="text" id="loginUser" placeholder="Username"><br>
+  <input type="password" id="loginPass" placeholder="Password"><br>
+  <button onclick="loginUser()">Login</button>
+  <p>Don't have an account? <span class="link" onclick="showRegister()">Register</span></p>
+</div>
+
+<!-- Register Box -->
+<div class="center-box hidden" id="registerBox">
+  <h2>Register Account</h2>
+  <input type="text" id="regUser" placeholder="Username"><br>
+  <input type="email" id="regEmail" placeholder="Email"><br>
+  <input type="password" id="regPass" placeholder="Password"><br>
+  <button onclick="registerUser()">Register</button>
+  <p>Already have an account? <span class="link" onclick="showLogin()">Login</span></p>
+</div>
+
+<!-- Coffee Shop Main Page -->
+<div id="coffeeShop" class="hidden">
+  <div class="nav-bar">
+    <button onclick="showMenu()">Menu</button>
+    <button onclick="showOrders()">My Orders</button>
+    <button onclick="showFeedback()">Feedback</button>
+    <button onclick="logoutUser()">Logout</button>
+  </div>
+
+  <!-- Menu Page -->
+  <div id="menuBox">
+    <h2 class="menu-header">Coffee Shop Menu</h2>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search menu items..." oninput="filterMenu()">
+    </div>
+    <div class="menu-container" id="menuContainer"></div>
+  </div>
+
+  <!-- Orders Page -->
+  <div id="ordersBox" class="hidden">
+    <h2 class="menu-header"> My Orders </h2>
+    <div class="orders-container" id="ordersContainer"></div>
+  </div>
+
+  <!-- Details Page -->
+  <div id="detailsBox" class="hidden">
+    <div class="details-container" id="detailsContainer"></div>
+  </div>
+  
+  <!-- Feedback Page -->
+  <div id="feedbackBox" class="hidden">
+    <div class="feedback-container">
+      <h2> Share Your Feedback </h2>
+      <p>We'd love to hear your thoughts about our coffee shop!</p>
+      <textarea id="feedbackText" placeholder="Write your feedback here..."></textarea><br>
+      <button onclick="submitFeedback()">Submit Feedback</button>
+      <div id="thankYouMessage" class="thank-you-message hidden">Thank you for your feedback!</div>
+    </div>
+  </div>
+</div>
+<script>
+const menuItems = {
+  Coffee: [
+    { name: "Espresso", price: 3, img: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80", description: "Rich and bold espresso shot" },
+    { name: "Cappuccino", price: 4, img: "https://images.unsplash.com/photo-1534778101976-62847782c213?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80", description: "Espresso with steamed milk and foam" },
+    { name: "Latte", price: 4.5, img: "https://images.unsplash.com/photo-1568649929103-28ffbefaca1e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", description: "Smooth espresso with steamed milk" },
+    { name: "Mocha", price: 5, img: "https://images.unsplash.com/photo-1511920170033-f8396924c348?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80", description: "Chocolate-flavored cappuccino" },
+    { name: "Americano", price: 3.5, img: "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80", description: "Espresso with hot water" }
+  ],
+  Tea: [
+    { name: "Chai Latte", price: 4, img: "https://images.unsplash.com/photo-1535587566541-97121a128dc5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", description: "Spiced tea with steamed milk" },
+    { name: "Earl Grey", price: 3, img: "https://images.unsplash.com/photo-1561047029-3000c68339ca?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80", description: "Classic bergamot-flavored tea" },
+    { name: "Matcha Latte", price: 4.5, img: "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", description: "Japanese green tea powder with milk" },
+    { name: "Herbal Tea", price: 3, img: "https://images.unsplash.com/photo-1597318181409-cf64d0b5d8a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", description: "Natural herbal infusion" }
+  ],
+  Pastries: [
+    { name: "Croissant", price: 3, img: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", description: "Flaky buttery croissant" },
+    { name: "Blueberry Muffin", price: 3.5, img: "https://images.unsplash.com/photo-1550583724-b2692b85b150?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", description: "Soft muffin with fresh blueberries" },
+    { name: "Chocolate Cake", price: 4, img: "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80", description: "Delicious homemade chocolate cake" },
+    { name: "Cinnamon Roll", price: 3.5, img: "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", description: "Sweet roll with cinnamon sugar filling" },
+    { name: "Almond Croissant", price: 4, img: "https://images.unsplash.com/photo-1589010588553-46e8e7c21788?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", description: "Croissant filled with almond cream" }
+  ],
+  Snacks: [
+    { name: "Cheese Platter", price: 6, img: "https://images.unsplash.com/photo-1550583724-b2692b85b150?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", description: "Assorted cheeses with crackers" },
+     { name: "Avocado Toast", price: 5.5, img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80", description: "Sourdough bread with mashed avocado" },
+    { name: "Granola Yogurt", price: 4.5, img: "https://images.unsplash.com/photo-1505576399279-565b52d4ac71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80", description: "Greek yogurt with homemade granola" }
+  ]
+};
+
+let orders = JSON.parse(localStorage.getItem("orders")) || [];
+let feedbacks = JSON.parse(localStorage.getItem("feedbacks")) || [];
+
+function fillMenu(searchTerm = "") {
+  const container = document.getElementById('menuContainer');
+  container.innerHTML = "";
+  Object.keys(menuItems).forEach(category => {
+    const filteredItems = menuItems[category].filter(item => 
+      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.description.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    if (filteredItems.length > 0) {
+      const section = document.createElement("div");
+      section.className = "category-section";
+      section.innerHTML = `<h3 class="category-title">${category}</h3>`;
+      const itemsContainer = document.createElement("div");
+      itemsContainer.className = "menu-items";
+      filteredItems.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "menu-card";
+        card.innerHTML = `
+          <img src="${item.img}" alt="${item.name}" loading="lazy">
+          <div class="menu-title">${item.name}</div>
+          <button class="order-btn" onclick="showDetails('${item.name}', '${category}')">Order</button>
+        `;
+        itemsContainer.appendChild(card);
+      });
+      section.appendChild(itemsContainer);
+      container.appendChild(section);
+    }
+  });
+}
+
+function filterMenu() {
+  const searchTerm = document.getElementById("searchInput").value;
+  fillMenu(searchTerm);
+}
+
+function showDetails(itemName, category) {
+  const item = menuItems[category].find(i => i.name === itemName);
+  const container = document.getElementById('detailsContainer');
+  container.innerHTML = `
+    <img src="${item.img}" alt="${item.name}" class="details-img">
+    <h2 class="menu-title">${item.name}</h2>
+    <p>${item.description}</p>
+    <div class="menu-price">$${item.price.toFixed(2)}</div>
+    <div class="rating">
+      <label>Rate this item: </label>
+      <select onchange="rateItem('${item.name}', this.value)">
+        <option value="0">Select rating</option>
+        <option value="1">1 Star</option>
+        <option value="2">2 Stars</option>
+        <option value="3">3 Stars</option>
+        <option value="4">4 Stars</option>
+        <option value="5">5 Stars</option>
+      </select>
+    </div>
+    <button class="buy-now-btn" onclick="orderItem('${item.name}', ${item.price}, '${category}')">Buy Now</button>
+  `;
+  document.getElementById("menuBox").classList.add("hidden");
+  document.getElementById("ordersBox").classList.add("hidden");
+  document.getElementById("detailsBox").classList.remove("hidden");
+  document.getElementById("feedbackBox").classList.add("hidden");
+}
+
+function rateItem(itemName, rating) {
+  const order = orders.find(o => o.name === itemName && !o.rating);
+  if (order) {
+    order.rating = parseInt(rating);
+    localStorage.setItem("orders", JSON.stringify(orders));
+    fillOrders();
+  }
+}
+
+function orderItem(name, price, category) {
+  orders.push({ name, price, category, date: new Date().toLocaleString(), rating: 0 });
+  localStorage.setItem("orders", JSON.stringify(orders));
+  alert(`You ordered ${name} for $${price.toFixed(2)}`);
+  showMenu();
+}
+
+function fillOrders() {
+  const container = document.getElementById('ordersContainer');
+  container.innerHTML = "";
+  if (orders.length === 0) {
+    container.innerHTML = "<p>No orders yet.</p>";
+    return;
+  }
+  orders.forEach(order => {
+    const item = document.createElement("div");
+    item.className = "order-item";
+    item.innerHTML = `
+      <div>
+        <strong>${order.name}</strong><br>
+        Category: ${order.category}<br>
+        Price: $${order.price.toFixed(2)}<br>
+        Ordered: ${order.date}<br>
+        Rating: ${order.rating > 0 ? order.rating + ' Stars' : 'Not rated'}
+      </div>
+      <button onclick="showDetails('${order.name}', '${order.category}')">View Details</button>
+    `;
+    container.appendChild(item);
+  });
+}
+
+function showMenu() {
+  document.getElementById("menuBox").classList.remove("hidden");
+  document.getElementById("ordersBox").classList.add("hidden");
+  document.getElementById("detailsBox").classList.add("hidden");
+  document.getElementById("feedbackBox").classList.add("hidden");
+  fillMenu();
+}
+
+function showOrders() {
+  document.getElementById("menuBox").classList.add("hidden");
+  document.getElementById("ordersBox").classList.remove("hidden");
+  document.getElementById("detailsBox").classList.add("hidden");
+  document.getElementById("feedbackBox").classList.add("hidden");
+  fillOrders();
+}
+
+function showFeedback() {
+  document.getElementById("menuBox").classList.add("hidden");
+  document.getElementById("ordersBox").classList.add("hidden");
+  document.getElementById("detailsBox").classList.add("hidden");
+  document.getElementById("feedbackBox").classList.remove("hidden");
+  document.getElementById("thankYouMessage").classList.add("hidden");
+  document.getElementById("feedbackText").value = "";
+}
+
+function submitFeedback() {
+  const feedbackText = document.getElementById("feedbackText").value.trim();
+  if (feedbackText) {
+    feedbacks.push({
+      text: feedbackText,
+      date: new Date().toLocaleString()
+    });
+    localStorage.setItem("feedbacks", JSON.stringify(feedbacks));
+    document.getElementById("thankYouMessage").classList.remove("hidden");
+    document.getElementById("feedbackText").value = "";
+    setTimeout(() => {
+      document.getElementById("thankYouMessage").classList.add("hidden");
+      showMenu();
+    }, 2000);
+  } else {
+    alert("Please write your feedback before submitting!");
+  }
+}
+
+function showRegister() {
+  document.getElementById("loginBox").classList.add("hidden");
+  document.getElementById("registerBox").classList.remove("hidden");
+}
+
+function showLogin() {
+  document.getElementById("registerBox").classList.add("hidden");
+  document.getElementById("coffeeShop").classList.add("hidden");
+  document.getElementById("loginBox").classList.remove("hidden");
+}
+
+function registerUser() {
+  const user = document.getElementById("regUser").value.trim();
+  const pass = document.getElementById("regPass").value.trim();
+  const email = document.getElementById("regEmail").value.trim();
+  if (!user || !pass || !email) { alert("Please fill in all fields."); return; }
+  localStorage.setItem("username", user);
+  localStorage.setItem("password", pass);
+  localStorage.setItem("email", email);
+  alert("Registration successful! Please login.");
+  showLogin();
+}
+
+function loginUser() {
+  const user = document.getElementById("loginUser").value.trim();
+  const pass = document.getElementById("loginPass").value.trim();
+  const storedUser = localStorage.getItem("username");
+  const storedPass = localStorage.getItem("password");
+  if (user === storedUser && pass === storedPass) {
+    localStorage.setItem("isLoggedIn", "true");
+    document.getElementById("loginBox").classList.add("hidden");
+    document.getElementById("coffeeShop").classList.remove("hidden");
+    showMenu();
+  } else {
+    alert("Invalid username or password!");
+  }
+}
+
+function logoutUser() {
+  localStorage.setItem("isLoggedIn", "false");
+  document.getElementById("coffeeShop").classList.add("hidden");
+  document.getElementById("loginBox").classList.remove("hidden");
+}
+
+window.onload = function() {
+  if (localStorage.getItem("isLoggedIn") === "true") {
+    document.getElementById("loginBox").classList.add("hidden");
+    document.getElementById("registerBox").classList.add("hidden");
+    document.getElementById("coffeeShop").classList.remove("hidden");
+    showMenu();
+  } else {
+    showLogin();
+  }
+};
+</script>
+</body>
+</html>
